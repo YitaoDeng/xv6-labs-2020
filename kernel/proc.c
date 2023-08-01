@@ -274,6 +274,7 @@ fork(void)
     return -1;
   }
   np->sz = p->sz;
+  np->trace_mask = p->trace_mask;
 
   np->parent = p;
 
@@ -444,6 +445,15 @@ wait(uint64 addr)
     // Wait for a child to exit.
     sleep(p, &p->lock);  //DOC: wait-sleep
   }
+}
+
+int
+trace(int mask)
+{
+  struct proc *p = myproc();
+  int old = p->trace_mask;
+  p->trace_mask = mask;
+  return old;
 }
 
 // Per-CPU process scheduler.
