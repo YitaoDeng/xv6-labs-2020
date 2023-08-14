@@ -5,6 +5,8 @@
 #include "riscv.h"
 #include "defs.h"
 #include "fs.h"
+#include "spinlock.h"
+#include "proc.h"
 
 /*
  * the kernel's page table.
@@ -46,6 +48,28 @@ kvminit()
   // the highest virtual address in the kernel.
   kvmmap(TRAMPOLINE, (uint64)trampoline, PGSIZE, PTE_R | PTE_X);
 }
+
+// Create a kernal page table for a given process
+pagetable_t
+proc_kernalpagetable(struct proc *p)
+{
+  pagetable_t pagetable;
+  // An empty page table.
+  pagetable = uvmcreate();
+  if(pagetable == 0)
+    return 0;
+  proc_kvmmap(pagetable, UART0, UART0, PGSIZE, PTE_R | PTE_W);
+  proc_kvmmap(pagetable, VIRTIO0, VIRTIO0, PGSIZE, PTE_R | PTE_W);
+  proc_kvmmap(pagetable, CLINT, CLINT, 0x10000, PTE_R | PTE_W);
+  proc_kvmmap(pagetable, PLIC, PLIC, 0x400000, PTE_R | PTE_W);
+  proc_kvmmap(pagetable, KERNBASE, KERNBASE, (uint64)etext-KERNBASE, PTE_R | PTE_X);
+  proc_kvmmap(pagetable, (uint64)etext, (uint64)etext, PHYSTOP-(uint64)etext, PTE_R | PTE_W);
+  proc_kvmmap(pagetable, TRAMPOLINE, (uint64)trampoline, PGSIZE, PTE_R | PTE_X);
+
+  return pagetable;
+}
+
+
 
 // Switch h/w page table register to the kernel's page table,
 // and enable paging.
@@ -121,6 +145,13 @@ kvmmap(uint64 va, uint64 pa, uint64 sz, int perm)
     panic("kvmmap");
 }
 
+void
+proc_kvmmap(pagetable_t process_pagetable,uint64 va, uint64 pa, uint64 sz, int perm)
+{
+  if(mappages(process_pagetable, va, sz, pa, perm) != 0)
+    panic("proc_kvmmap");
+}
+
 // translate a kernel virtual address to
 // a physical address. only needed for
 // addresses on the stack.
@@ -132,7 +163,7 @@ kvmpa(uint64 va)
   pte_t *pte;
   uint64 pa;
   
-  pte = walk(kernel_pagetable, va, 0);
+  pte = walk(myproc()->kpagetable, va, 0);
   if(pte == 0)
     panic("kvmpa");
   if((*pte & PTE_V) == 0)
@@ -284,6 +315,25 @@ freewalk(pagetable_t pagetable)
       pagetable[i] = 0;
     } else if(pte & PTE_V){
       panic("freewalk: leaf");
+    }
+  }
+  kfree((void*)pagetable);
+}
+
+// Recursively free page-table pages besides leaves.
+void
+freekernalwalk(pagetable_t pagetable)
+{
+  // there are 2^9 = 512 PTEs in a page table.
+  for(int i = 0; i < 512; i++){
+    pte_t pte = pagetable[i];
+    if((pte & PTE_V) && (pte & (PTE_R|PTE_W|PTE_X)) == 0){
+      // this PTE points to a lower-level page table.
+      uint64 child = PTE2PA(pte);
+      freekernalwalk((pagetable_t)child);
+      pagetable[i] = 0;
+    } else if(pte & PTE_V){
+      pagetable[i] = 0;
     }
   }
   kfree((void*)pagetable);
