@@ -4,7 +4,7 @@
 
 - [x] [Lab util: Unix utilities](https://github.com/YitaoDeng/xv6-labs-2020/tree/util)
 - [x] [Lab syscall: System calls](https://github.com/YitaoDeng/xv6-labs-2020/tree/syscall)
-- [ ] [Lab pgtbl: Page tables]()
+- [x] [Lab pgtbl: Page tables](https://github.com/YitaoDeng/xv6-labs-2020/tree/pgtbl)
 - [ ] [Lab traps: Trap]()
 - [ ] [Lab lazy: Lazy allocation]()
 - [ ] [Lab cow: Copy-on-write fork]()
@@ -28,5 +28,11 @@
 
 - [tracing](https://github.com/YitaoDeng/xv6-labs-2020/commit/6a393f8ea3ceeb9cb7dd45f9836e92641353fd33)
 - [sysinfo](https://github.com/YitaoDeng/xv6-labs-2020/commit/3afd3185e32ffd4ae8b46742b8e0d40b575928e8)
+
+### Lab pgtbl: Page tables
+
+- [vmprint](https://github.com/YitaoDeng/xv6-labs-2020/commit/eb12e1481b1cf9ea5a80838a1c9c404dc5f74fe6)
+- [kpagetable](https://github.com/YitaoDeng/xv6-labs-2020/commit/9c6dcd7a243c8d3d43b79d25be4455cb808c60f9)
+- [kvmcopyuvm](https://github.com/YitaoDeng/xv6-labs-2020/commit/6c62390a325ad8f013b3341d693419b2a7bea62c)
 
 The format of README.md is from [foyoodo's repo](https://github.com/foyoodo/xv6-labs-2020)
