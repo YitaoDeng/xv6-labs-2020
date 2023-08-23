@@ -5,7 +5,7 @@
 - [x] [Lab util: Unix utilities](https://github.com/YitaoDeng/xv6-labs-2020/tree/util)
 - [x] [Lab syscall: System calls](https://github.com/YitaoDeng/xv6-labs-2020/tree/syscall)
 - [x] [Lab pgtbl: Page tables](https://github.com/YitaoDeng/xv6-labs-2020/tree/pgtbl)
-- [ ] [Lab traps: Trap]()
+- [x] [Lab traps: Trap](https://github.com/YitaoDeng/xv6-labs-2020/tree/traps)
 - [ ] [Lab lazy: Lazy allocation]()
 - [ ] [Lab cow: Copy-on-write fork]()
 - [ ] [Lab thread: Multithreading]()
@@ -34,5 +34,10 @@
 - [vmprint](https://github.com/YitaoDeng/xv6-labs-2020/commit/eb12e1481b1cf9ea5a80838a1c9c404dc5f74fe6)
 - [kpagetable](https://github.com/YitaoDeng/xv6-labs-2020/commit/9c6dcd7a243c8d3d43b79d25be4455cb808c60f9)
 - [kvmcopyuvm](https://github.com/YitaoDeng/xv6-labs-2020/commit/6c62390a325ad8f013b3341d693419b2a7bea62c)
+
+### Lab traps
+
+- [backtrace](https://github.com/YitaoDeng/xv6-labs-2020/commit/4d451526be179f5622224db7071b09476d9750ca)
+- [sigalarm](https://github.com/YitaoDeng/xv6-labs-2020/commit/badcf2c5ef7120135610bb2d38f2daffcab0104d)
 
 The format of README.md is from [foyoodo's repo](https://github.com/foyoodo/xv6-labs-2020)
