@@ -23,11 +23,56 @@ struct {
   struct run *freelist;
 } kmem;
 
+struct {
+  struct spinlock lock;
+  int count[(PGROUNDUP(PHYSTOP) - KERNBASE)/PGSIZE];
+} PageRef;
+void addRef(uint64 addr){
+	acquire(&PageRef.lock);
+	PageRef.count[addr2idx(addr)]++;
+	release(&PageRef.lock);
+}
+void decRef(uint64 addr){
+	acquire(&PageRef.lock);
+	if(PageRef.count[addr2idx(addr)] == 0){
+		release(&PageRef.lock);
+		kfree((void*)addr);
+	}
+	else{
+		PageRef.count[addr2idx(addr)]--;
+		release(&PageRef.lock);
+	}
+}
+int getRef(uint64 addr){
+	acquire(&PageRef.lock);
+	int idx = addr2idx(addr);
+	int cnt;
+	if(idx >= 0 && idx <= addr2idx(PHYSTOP)){
+		cnt = PageRef.count[idx];
+	}
+	else{
+		cnt = 0;
+	}
+	release(&PageRef.lock);
+	return cnt;
+}
+
 void
 kinit()
 {
   initlock(&kmem.lock, "kmem");
+	initlock(&PageRef.lock, "PageRef");
   freerange(end, (void*)PHYSTOP);
+	for(int i=0;i<=addr2idx(PHYSTOP);i++){
+		PageRef.count[i] = 0;
+	}
+}
+
+int
+addr2idx(uint64 addr)
+{
+	int idx = (addr - (uint64)end) / PGSIZE;
+	return idx;
 }
 
 void
@@ -51,7 +96,11 @@ kfree(void *pa)
   if(((uint64)pa % PGSIZE) != 0 || (char*)pa < end || (uint64)pa >= PHYSTOP)
     panic("kfree");
 
-  // Fill with junk to catch dangling refs.
+  if(getRef((uint64)pa) > 0){
+		decRef((uint64)pa);
+		return;
+	}
+	// Fill with junk to catch dangling refs.
   memset(pa, 1, PGSIZE);
 
   r = (struct run*)pa;
