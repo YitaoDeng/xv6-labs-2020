@@ -6,7 +6,7 @@
 - [x] [Lab syscall: System calls](https://github.com/YitaoDeng/xv6-labs-2020/tree/syscall)
 - [x] [Lab pgtbl: Page tables](https://github.com/YitaoDeng/xv6-labs-2020/tree/pgtbl)
 - [x] [Lab traps: Trap](https://github.com/YitaoDeng/xv6-labs-2020/tree/traps)
-- [ ] [Lab lazy: Lazy allocation]()
+- [x] [Lab lazy: Lazy allocation](https://github.com/YitaoDeng/xv6-labs-2020/tree/lazy)
 - [ ] [Lab cow: Copy-on-write fork]()
 - [ ] [Lab thread: Multithreading]()
 - [ ] [Lab lock: Parallelism/locking]()
@@ -39,5 +39,10 @@
 
 - [backtrace](https://github.com/YitaoDeng/xv6-labs-2020/commit/4d451526be179f5622224db7071b09476d9750ca)
 - [sigalarm](https://github.com/YitaoDeng/xv6-labs-2020/commit/badcf2c5ef7120135610bb2d38f2daffcab0104d)
+
+### Lab lazy: xv6 lazy page allocation
+
+- [lazy allocation](https://github.com/YitaoDeng/xv6-labs-2020/commit/957f5beb1dfaccde639acae3abccfaa02cba6ada)
+- [lazytests and usertests](https://github.com/YitaoDeng/xv6-labs-2020/commit/a157962cbdce5d48d5561351c4ef752c3e359d6d)
 
 The format of README.md is from [foyoodo's repo](https://github.com/foyoodo/xv6-labs-2020)
