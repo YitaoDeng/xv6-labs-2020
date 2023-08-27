@@ -8,7 +8,7 @@
 - [x] [Lab traps: Trap](https://github.com/YitaoDeng/xv6-labs-2020/tree/traps)
 - [x] [Lab lazy: Lazy allocation](https://github.com/YitaoDeng/xv6-labs-2020/tree/lazy)
 - [x] [Lab cow: Copy-on-write fork](https://github.com/YitaoDeng/xv6-labs-2020/tree/cow)
-- [ ] [Lab thread: Multithreading]()
+- [x] [Lab thread: Multithreading](https://github.com/YitaoDeng/xv6-labs-2020/tree/lazy)
 - [ ] [Lab lock: Parallelism/locking]()
 - [ ] [Lab fs: File system]()
 - [ ] [Lab mmap: Mmap]()
@@ -48,5 +48,11 @@
 ### Lab cow: Copy-on-Write Fork
 
 - [copy-on write](https://github.com/YitaoDeng/xv6-labs-2020/commit/74c5cd391ff9074624ca87e009d590c26ea51a6c)
+
+### Lab thread: Multithreading
+
+- [Uthread](https://github.com/YitaoDeng/xv6-labs-2020/commit/1da1fb7306f699fb6a1f44369611af575f8c8c0e)
+- [Using threads](https://github.com/YitaoDeng/xv6-labs-2020/commit/12e6820a6590a378d61df796f14e82da51b5de27)
+- [Barrier](https://github.com/YitaoDeng/xv6-labs-2020/commit/de3f506aa8519226899e336e61bc962836e19a19)
 
 The format of README.md is from [foyoodo's repo](https://github.com/foyoodo/xv6-labs-2020)
